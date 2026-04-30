@@ -1,6 +1,3 @@
-"""
-Django settings 
-"""
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -11,9 +8,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me')
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') + ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
+if '.vercel.app' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.extend(['.vercel.app', '.now.sh'])
 
-CSRF_TRUSTED_ORIGINS = ['https://test-py-stripe.vercel.app', 'https://*.vercel.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,11 +21,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'payments',  
+    'payments',
 ]
 
 MIDDLEWARE = [
-    'stripe_project.middleware.VercelDBMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,12 +54,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stripe_project.wsgi.application'
 
-if os.getenv('VERCEL'):
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL and DATABASE_URL.startswith('postgres'):
+    import dj_database_url
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': '/tmp/db.sqlite3',
-        }
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
 else:
     DATABASES = {
@@ -82,7 +79,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 STRIPE_PUBLIC_KEY_USD = os.getenv('STRIPE_PUBLIC_KEY_USD')
 STRIPE_SECRET_KEY_USD = os.getenv('STRIPE_SECRET_KEY_USD')
 STRIPE_PUBLIC_KEY_EUR = os.getenv('STRIPE_PUBLIC_KEY_EUR')
@@ -90,27 +86,19 @@ STRIPE_SECRET_KEY_EUR = os.getenv('STRIPE_SECRET_KEY_EUR')
 
 STRIPE_PUBLIC_KEYS = {
     'usd': STRIPE_PUBLIC_KEY_USD,
-    'eur': STRIPE_PUBLIC_KEY_EUR or STRIPE_PUBLIC_KEY_USD,  
+    'eur': STRIPE_PUBLIC_KEY_EUR or STRIPE_PUBLIC_KEY_USD,
 }
 
 STRIPE_SECRET_KEYS = {
     'usd': STRIPE_SECRET_KEY_USD,
-    'eur': STRIPE_SECRET_KEY_EUR or STRIPE_SECRET_KEY_USD,  
+    'eur': STRIPE_SECRET_KEY_EUR or STRIPE_SECRET_KEY_USD,
 }
 
-# Базовый ключ по умолчанию (USD)
 STRIPE_PUBLIC_KEY = STRIPE_PUBLIC_KEY_USD
 STRIPE_SECRET_KEY = STRIPE_SECRET_KEY_USD
 
-
-# URL для перенаправления после входа
 LOGIN_REDIRECT_URL = '/profile/'
-
-# URL для перенаправления после выхода
 LOGOUT_REDIRECT_URL = '/'
-
-# URL страницы входа
 LOGIN_URL = '/accounts/login/'
 
-# Шаблоны для аутентификации
 TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
