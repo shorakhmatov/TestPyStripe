@@ -42,15 +42,13 @@ Stripe Checkout Session → Оплата
 - 🎉 `completed` - Завершен
 - ❌ `cancelled` - Отменен
 
-## 🚀 Быстрый старт (локально)
+## 🚀 Быстрый старт
 
-## 📋 Требования
+### Требования
 
 - Python 3.10+
 - Django 4.2+
 - Stripe Account (бесплатный тестовый режим)
-
-## 🚀 Быстрый старт
 
 ### 1. Настройка окружения
 
@@ -102,8 +100,6 @@ python manage.py runserver
 
 http://localhost:8000/
 
----
-
 ## 📁 Структура проекта
 
 ```
@@ -135,8 +131,6 @@ TestPyStripe/
 ├── docker-compose.yml
 └── README.md                  # Этот файл
 ```
-
----
 
 ## 🔌 API Endpoints
 
@@ -255,9 +249,6 @@ curl -X GET http://localhost:8000/item/1/ -H "Accept: application/json"
 # Собрать и запустить
 docker-compose up --build
 
-# Или в фоновом режиме
-docker-compose up -d --build
-
 # Создать суперпользователя
 docker-compose exec web python manage.py createsuperuser
 
@@ -359,44 +350,8 @@ docker-compose exec web python manage.py init_data
 
 Этот проект создан для тестового задания.
 
----
-
-**Готов к тестированию!** 🚀
-
----
-
-## 📚 Полезные ссылки
-
-**Stripe Документация:**
-- [Quick Start](https://stripe.com/docs/checkout/quickstart)
-- [Python API](https://stripe.com/docs/api?lang=python)
-- [Checkout Session](https://stripe.com/docs/api/checkout/sessions/create)
-- [Test Cards](https://stripe.com/docs/testing#cards)
-
-**Django:**
-- [Models](https://docs.djangoproject.com/en/4.2/topics/db/models/)
-- [Views](https://docs.djangoproject.com/en/4.2/topics/http/views/)
-
----
-
-## 🧪 Тестовые карты Stripe
-
-| Номер | Результат |
-|-------|-----------|
-| `4242 4242 4242 4242` | Успешная оплата |
-| `4000 0000 0000 0002` | Карта отклонена |
-
-Дата: любая будущая, CVC: любой 3 цифры
-
----
-
 ## 🐳 Запуск с Docker 
 
 ```bash
 docker-compose up --build
 ```
-
-#   t e s t P y S t r i p e  
- #   t e s t P y S t r i p e  
- #   t e s t P y S t r i p e  
- 
