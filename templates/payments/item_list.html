@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe Shop — Каталог товаров</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideDown 0.6s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .product-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .product-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .product-description {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .product-body {
+            padding: 25px;
+        }
+        
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-tag {
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .currency-badge {
+            font-size: 12px;
+            padding: 4px 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .buy-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+        }
+        
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .admin-link {
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+        
+        .admin-link a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .admin-link a:hover {
+            color: white;
+        }
+        
+        .auth-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .auth-btn {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .user-info {
+            color: white;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        
+        .user-info a {
+            color: #ffd700;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🛍️</div>
+            <h1>Stripe Shop</h1>
+            <p class="subtitle">Выберите товар для покупки</p>
+            
+            {% if user.is_authenticated %}
+            <div class="user-info">
+                👤 {{ user.username }} | 
+                <a href="/profile/">👤 ЛК</a>
+                <a href="/my-orders/">📦 Заказы</a>
+                <a href="/accounts/logout/">🚪 Выйти</a>
+            </div>
+            {% else %}
+            <div class="auth-links">
+                <a href="/accounts/login/" class="auth-btn">🔐 Войти</a>
+                <a href="/register/" class="auth-btn">📝 Регистрация</a>
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if items %}
+        <div class="products-grid">
+            {% for item in items %}
+            <a href="{% url 'item_detail' item.id %}" class="product-card">
+                <div class="product-header">
+                    <div class="product-icon">
+                        {% if item.currency == 'usd' %}🇺🇸{% else %}🇪🇺{% endif %}
+                    </div>
+                    <div class="product-name">{{ item.name }}</div>
+                    <div class="product-description">{{ item.description|truncatechars:60 }}</div>
+                </div>
+                <div class="product-body">
+                    <div class="features-list">
+                        <div class="feature-tag">✓ Мгновенно</div>
+                        <div class="feature-tag">✓ Гарантия</div>
+                        <div class="feature-tag">✓ 24/7</div>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">{{ item.get_display_price }}</span>
+                        <span class="currency-badge">{{ item.currency|upper }}</span>
+                    </div>
+                    <button class="buy-btn">Купить сейчас →</button>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h2>📝 Нет доступных товаров</h2>
+            <p>Запустите команду: python manage.py init_data</p>
+        </div>
+        {% endif %}
+        
+        <div class="admin-link">
+            <a href="/admin/">🔒 Перейти в админ-панель</a>
+        </div>
+    </div>
+</body>
+</html>

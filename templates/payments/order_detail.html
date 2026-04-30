@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ #{{ order.id }} — Stripe Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .order-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .order-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: moveBackground 20s linear infinite;
+        }
+        
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+        
+        .order-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .order-body {
+            padding: 30px;
+        }
+        
+        .items-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .item-row:last-child {
+            border-bottom: none;
+        }
+        
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+        
+        .item-qty {
+            font-size: 13px;
+            color: #6b7280;
+        }
+        
+        .item-price {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .discounts-section, .tax-section {
+            background: #f0fdf4;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .discounts-section {
+            background: #f0fdf4;
+            border: 1px solid #10b981;
+        }
+        
+        .tax-section {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+        }
+        
+        .discount-label, .tax-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .discount-label::before {
+            content: '🎁';
+        }
+        
+        .tax-label::before {
+            content: '📋';
+        }
+        
+        .discount-value {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .tax-value {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: white;
+        }
+        
+        .total-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+        
+        .total-value {
+            font-size: 36px;
+            font-weight: 800;
+        }
+        
+        .currency-badge {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 14px;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .buy-button {
+            width: 100%;
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        
+        .buy-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .buy-button.loading .spinner {
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            margin-top: 15px;
+            padding: 12px 16px;
+            background: #fef2f2;
+            color: #dc2626;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="order-card">
+            <div class="order-header">
+                <div class="order-icon">🛒</div>
+                <h1 class="order-title">Заказ #{{ order.id }}</h1>
+                <p class="order-subtitle">{{ order.get_items_count }} товаров • {{ order.currency|upper }}</p>
+            </div>
+            
+            <div class="order-body">
+                <div class="items-section">
+                    <div class="section-title">Товары в заказе</div>
+                    {% for order_item in order.order_items.all %}
+                    <div class="item-row">
+                        <div class="item-info">
+                            <div class="item-icon">
+                                {% if order_item.item.currency == 'usd' %}🇺🇸{% else %}🇪🇺{% endif %}
+                            </div>
+                            <div>
+                                <div class="item-name">{{ order_item.item.name }}</div>
+                                <div class="item-qty">Количество: {{ order_item.quantity }}</div>
+                            </div>
+                        </div>
+                        <div class="item-price">{{ order_item.get_display_subtotal }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                {% if order.discount %}
+                <div class="discounts-section">
+                    <div class="discount-label">{{ order.discount.name }}</div>
+                    <div class="discount-value">-{{ order.discount.percent_off }}%</div>
+                </div>
+                {% endif %}
+                
+                {% if order.tax %}
+                <div class="tax-section">
+                    <div class="tax-label">{{ order.tax.name }}</div>
+                    <div class="tax-value">+{{ order.tax.percentage }}%</div>
+                </div>
+                {% endif %}
+                
+                <div class="total-section">
+                    <div class="total-label">Итого к оплате</div>
+                    <div class="total-value">
+                        {{ order.get_display_total }}
+                        <span class="currency-badge">{{ order.currency|upper }}</span>
+                    </div>
+                </div>
+                
+                <button id="buy-button" class="buy-button">
+                    <span class="spinner"></span>
+                    <span class="btn-text">Оплатить заказ</span>
+                </button>
+                
+                <div id="error-message" class="error-message"></div>
+            </div>
+        </div>
+        
+        <a href="/" class="back-link">← Вернуться к каталогу</a>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripePublicKey = '{{ stripe_public_key }}';
+        const orderId = {{ order.id }};
+        const stripe = Stripe(stripePublicKey);
+        const buyButton = document.getElementById('buy-button');
+        const errorDiv = document.getElementById('error-message');
+        
+        buyButton.addEventListener('click', async function() {
+            buyButton.disabled = true;
+            buyButton.classList.add('loading');
+            errorDiv.classList.remove('show');
+            
+            try {
+                const response = await fetch(`/buy/order/${orderId}/`, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка при создании сессии оплаты');
+                }
+                
+                const data = await response.json();
+                
+                const result = await stripe.redirectToCheckout({
+                    sessionId: data.session_id
+                });
+                
+                if (result.error) {
+                    throw new Error(result.error.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = '❌ ' + error.message;
+                errorDiv.classList.add('show');
+                buyButton.disabled = false;
+                buyButton.classList.remove('loading');
+            }
+        });
+    </script>
+</body>
+</html>
