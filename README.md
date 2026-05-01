@@ -63,13 +63,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Настройка Stripe
-
-1. Зарегистрируйся на [stripe.com](https://stripe.com)
-2. Перейди в Developers → API keys
-3. Скопируй `Publishable key` и `Secret key`
-4. Бонус: создай второй keypair для EUR валюты (добавь новый аккаунт в Stripe)
-
 ### 3. Конфигурация
 
 ```bash
@@ -348,24 +341,4 @@ docker-compose exec web python manage.py init_data
 
 Дата: любая будущая, CVC: любой 3 цифры
 
-## 🚀 Деплой на Vercel
 
-1. Создай базу PostgreSQL на Supabase или Neon
-2. Получи строку подключения `postgresql://...`
-3. В Vercel Dashboard добавь Environment Variables:
-   - `DATABASE_URL` = строка подключения
-   - `SECRET_KEY` = случайный ключ
-   - `DEBUG` = False
-   - `STRIPE_PUBLIC_KEY_USD` / `STRIPE_SECRET_KEY_USD`
-4. Build Command: `python manage.py migrate && python manage.py init_data`
-
-## 📚 Полезные ссылки
-
-- [Stripe Checkout Documentation](https://stripe.com/docs/checkout)
-- [Stripe Python Library](https://stripe.com/docs/api/python)
-- [Stripe Test Cards](https://stripe.com/docs/testing)
-- [Django Documentation](https://docs.djangoproject.com/)
-
-## 📝 Лицензия
-
-Этот проект создан для тестового задания.
