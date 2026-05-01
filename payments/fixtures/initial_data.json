@@ -1,0 +1,330 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$sgc09LDDkH3AyVRVyY8Af7$bLLGAa+huAkKL5enDVbPYQaxHbdIFZ8wgr1sgaEzOZ0=",
+    "last_login": "2026-04-29T11:16:05.160Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-29T10:47:19.923Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$c2wd2qksVUtidiQnLVW2VQ$MdSQBOx+7u2UzH1fjq9HYNxD+g90kzvX2rP/E4rFndA=",
+    "last_login": "2026-04-29T17:29:15.272Z",
+    "is_superuser": false,
+    "username": "testuser",
+    "first_name": "",
+    "last_name": "",
+    "email": "test@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-29T11:11:01.154Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$Zz6YAyV7H0bGcE99UjRIde$IaZna6Nk8OPSVMLLT80kZWxoUuyfnwKZK8MXqhuJYGs=",
+    "last_login": "2026-04-29T17:30:34.877Z",
+    "is_superuser": false,
+    "username": "admin2",
+    "first_name": "",
+    "last_name": "",
+    "email": "daler@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-29T11:12:26.649Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "payments.item",
+  "pk": 1,
+  "fields": {
+    "name": "iPhone 15 Pro",
+    "description": "╤ьрЁЄЇюэ Apple ё ЄшЄрэют√ь ъюЁяєёюь",
+    "price": 99900,
+    "currency": "usd",
+    "created_at": "2026-04-29T10:48:39.941Z"
+  }
+},
+{
+  "model": "payments.item",
+  "pk": 2,
+  "fields": {
+    "name": "MacBook Air M3",
+    "description": "╙ы№ЄЁрЄюэъшщ эюєЄсєъ ё ўшяюь M3",
+    "price": 129900,
+    "currency": "usd",
+    "created_at": "2026-04-29T10:48:39.957Z"
+  }
+},
+{
+  "model": "payments.item",
+  "pk": 3,
+  "fields": {
+    "name": "AirPods Pro 2",
+    "description": "┴хёяЁютюфэ√х эрє°эшъш ё °єьюяюфртыхэшхь",
+    "price": 24900,
+    "currency": "usd",
+    "created_at": "2026-04-29T10:48:40.003Z"
+  }
+},
+{
+  "model": "payments.item",
+  "pk": 4,
+  "fields": {
+    "name": "iPad Pro 12.9\"",
+    "description": "╧ырэ°хЄ ё фшёяыххь Liquid Retina XDR",
+    "price": 109900,
+    "currency": "eur",
+    "created_at": "2026-04-29T10:48:40.023Z"
+  }
+},
+{
+  "model": "payments.order",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "discount": null,
+    "tax": null,
+    "total_amount": 24900,
+    "currency": "usd",
+    "status": "completed",
+    "is_paid": true,
+    "stripe_session_id": "cs_test_a1i67Ra64MJQ0MK1MqNxxfbIfzK4PwtrdhHEzbgpzz8wGI2qK39vWhEvoJ",
+    "customer_email": "daler.shd.03@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": "2026-04-29T11:31:36.815Z",
+    "created_at": "2026-04-29T11:31:07.361Z"
+  }
+},
+{
+  "model": "payments.order",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "discount": null,
+    "tax": null,
+    "total_amount": 24900,
+    "currency": "usd",
+    "status": "processing",
+    "is_paid": true,
+    "stripe_session_id": "cs_test_a1awSwHE4wTniK0QeRI2zEnWpm5gwbaRHduNtpT9ByPTAp6KUqyU13jMps",
+    "customer_email": "daler.shd.03@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": "2026-04-29T16:11:42.170Z",
+    "created_at": "2026-04-29T16:09:25.630Z"
+  }
+},
+{
+  "model": "payments.order",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "discount": null,
+    "tax": null,
+    "total_amount": 109900,
+    "currency": "eur",
+    "status": "pending",
+    "is_paid": false,
+    "stripe_session_id": null,
+    "customer_email": "daler@gmail.com",
+    "customer_name": null,
+    "paid_at": null,
+    "created_at": "2026-04-29T17:31:05.398Z"
+  }
+},
+{
+  "model": "payments.order",
+  "pk": 4,
+  "fields": {
+    "user": 3,
+    "discount": null,
+    "tax": null,
+    "total_amount": 109900,
+    "currency": "eur",
+    "status": "pending",
+    "is_paid": false,
+    "stripe_session_id": null,
+    "customer_email": "daler@gmail.com",
+    "customer_name": null,
+    "paid_at": null,
+    "created_at": "2026-04-29T17:31:11.501Z"
+  }
+},
+{
+  "model": "payments.order",
+  "pk": 5,
+  "fields": {
+    "user": 3,
+    "discount": null,
+    "tax": null,
+    "total_amount": 109900,
+    "currency": "eur",
+    "status": "cancelled",
+    "is_paid": false,
+    "stripe_session_id": null,
+    "customer_email": "daler@gmail.com",
+    "customer_name": null,
+    "paid_at": null,
+    "created_at": "2026-04-29T17:42:07.059Z"
+  }
+},
+{
+  "model": "payments.orderitem",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "item": 3,
+    "quantity": 1
+  }
+},
+{
+  "model": "payments.orderitem",
+  "pk": 2,
+  "fields": {
+    "order": 2,
+    "item": 3,
+    "quantity": 1
+  }
+},
+{
+  "model": "payments.orderitem",
+  "pk": 3,
+  "fields": {
+    "order": 3,
+    "item": 4,
+    "quantity": 1
+  }
+},
+{
+  "model": "payments.orderitem",
+  "pk": 4,
+  "fields": {
+    "order": 4,
+    "item": 4,
+    "quantity": 1
+  }
+},
+{
+  "model": "payments.orderitem",
+  "pk": 5,
+  "fields": {
+    "order": 5,
+    "item": 4,
+    "quantity": 1
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "payment_type": "item",
+    "item": 1,
+    "order": null,
+    "amount": 99900,
+    "currency": "usd",
+    "status": "completed",
+    "stripe_payment_intent_id": null,
+    "stripe_session_id": "cs_test_a1mZzA8D1iLhD1koLuW8ekWdXxZp52xNvRPsQ8IW0R9tSdbdquzDMxAtiz",
+    "customer_email": "daler.shd.03@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": "2026-04-29T11:02:59.320Z",
+    "created_at": "2026-04-29T11:02:36.524Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "payment_type": "item",
+    "item": 2,
+    "order": null,
+    "amount": 129900,
+    "currency": "usd",
+    "status": "completed",
+    "stripe_payment_intent_id": null,
+    "stripe_session_id": "cs_test_a1lk9ydC4FTwZLz5UhroHvJMhGCNDWWcCWqFkTUnbtk2G7Zgl25X59A2Rv",
+    "customer_email": "daler.shd.03@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": "2026-04-29T11:13:33.289Z",
+    "created_at": "2026-04-29T11:12:53.790Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "payment_type": "order",
+    "item": 3,
+    "order": 1,
+    "amount": 24900,
+    "currency": "usd",
+    "status": "completed",
+    "stripe_payment_intent_id": null,
+    "stripe_session_id": "cs_test_a15tO4SrBeVwLruf8yRappna3Ju5yfSa749GyY7KPD9EFxjok9geY8diZN",
+    "customer_email": "daler.shd.03@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": "2026-04-29T11:31:36.758Z",
+    "created_at": "2026-04-29T11:31:10.825Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 4,
+  "fields": {
+    "user": 3,
+    "payment_type": "order",
+    "item": null,
+    "order": 1,
+    "amount": 24900,
+    "currency": "usd",
+    "status": "pending",
+    "stripe_payment_intent_id": null,
+    "stripe_session_id": "cs_test_a1i67Ra64MJQ0MK1MqNxxfbIfzK4PwtrdhHEzbgpzz8wGI2qK39vWhEvoJ",
+    "customer_email": "daler@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": null,
+    "created_at": "2026-04-29T11:35:45.303Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "payment_type": "order",
+    "item": 3,
+    "order": 2,
+    "amount": 24900,
+    "currency": "usd",
+    "status": "completed",
+    "stripe_payment_intent_id": null,
+    "stripe_session_id": "cs_test_a1awSwHE4wTniK0QeRI2zEnWpm5gwbaRHduNtpT9ByPTAp6KUqyU13jMps",
+    "customer_email": "daler.shd.03@gmail.com",
+    "customer_name": "gnsi gjnrei",
+    "paid_at": "2026-04-29T16:11:42.149Z",
+    "created_at": "2026-04-29T16:09:28.355Z"
+  }
+}
+]
