@@ -1,18 +1,12 @@
-"""
-Команда для создания тестовых данных.
-
-TODO: Реализуй создание тестовых Item после того как создашь модель.
-"""
-
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from payments.models import Item
 
 
 class Command(BaseCommand):
-    help = 'Создаёт тестовые товары для Stripe демо'
+    help = 'Создаёт тестовые данные для Stripe демо'
 
     def handle(self, *args, **options):
-        # TODO: После создания модели Item, раскомментируй:
         
         items_data = [
             {
@@ -56,3 +50,38 @@ class Command(BaseCommand):
                 )
         
         self.stdout.write(self.style.SUCCESS('Готово!'))
+
+        users_data = [
+            {
+                'username': 'admin',
+                'email': 'admin@example.com',
+                'password': 'admin123',
+                'is_staff': True,
+                'is_superuser': True,
+            },
+            {
+                'username': 'testuser',
+                'email': 'testuser@example.com',
+                'password': 'test123',
+                'is_staff': False,
+                'is_superuser': False,
+            },
+        ]
+
+        for user_data in users_data:
+            username = user_data['username']
+            password = user_data.pop('password')
+            user, created = User.objects.get_or_create(
+                username=username,
+                defaults={k: v for k, v in user_data.items() if k != 'username'}
+            )
+            if created:
+                user.set_password(password)
+                user.save()
+                self.stdout.write(
+                    self.style.SUCCESS(f'Создан пользователь: {username}')
+                )
+            else:
+                self.stdout.write(
+                    self.style.WARNING(f'Пользователь уже существует: {username}')
+                )
