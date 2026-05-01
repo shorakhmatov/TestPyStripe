@@ -94,7 +94,9 @@ def item_detail(request, id):
 
 def item_list(request):
     items = Item.objects.all()
-    return render(request, 'payments/item_list.html', {'items': items})
+    response = render(request, 'payments/item_list.html', {'items': items})
+    response['Cache-Control'] = 'no-cache, must-revalidate, max-age=0'
+    return response
 
 
 
@@ -305,9 +307,6 @@ def register_view(request):
 
 @login_required
 def profile_view(request):
-    """
-    Личный кабинет пользователя
-    """
     user = request.user
 
     orders_count = user.orders.count()
@@ -323,7 +322,7 @@ def profile_view(request):
     
     recent_payments = user.payments.order_by('-created_at')[:5]
     
-    return render(request, 'payments/profile.html', {
+    response = render(request, 'payments/profile.html', {
         'user': user,
         'orders_count': orders_count,
         'payments_count': payments_count,
@@ -331,16 +330,21 @@ def profile_view(request):
         'recent_orders': recent_orders,
         'recent_payments': recent_payments,
     })
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
 
 @login_required
 def my_orders_view(request):
-    """
-    История заказов пользователя
-    """
     user = request.user
     orders = user.orders.order_by('-created_at')
     
-    return render(request, 'payments/my_orders.html', {
+    response = render(request, 'payments/my_orders.html', {
         'orders': orders,
     })
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response

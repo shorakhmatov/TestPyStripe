@@ -19,8 +19,7 @@ class ItemAdmin(admin.ModelAdmin):
             'fields': ('price', 'currency', 'get_display_price')
         }),
         ('Статистика', {
-            'fields': ('get_sales_count',),
-            'description': 'Количество продаж этого товара'
+            'fields': ('get_sales_count',)
         }),
         ('Системная информация', {
             'fields': ('created_at',),
@@ -81,8 +80,7 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('id', 'user', 'status', 'get_next_statuses_display', 'currency', 'created_at')
         }),
         ('Покупатель', {
-            'fields': ('customer_name', 'customer_email'),
-            'description': 'Информация о покупателе (если не авторизован)'
+            'fields': ('customer_name', 'customer_email')
         }),
         ('Финансы', {
             'fields': ('total_amount', 'get_display_total', 'paid_at')
@@ -212,8 +210,7 @@ class DiscountAdmin(admin.ModelAdmin):
             'fields': ('name', 'percent_off', 'is_active')
         }),
         ('Stripe', {
-            'fields': ('stripe_coupon_id',),
-            'description': 'ID купона создается автоматически в Stripe'
+            'fields': ('stripe_coupon_id',)
         }),
         ('Системная информация', {
             'fields': ('created_at',),
@@ -278,8 +275,7 @@ class PaymentAdmin(admin.ModelAdmin):
             'fields': ('id', 'user', 'payment_type', 'status', 'created_at')
         }),
         ('Оплаченный объект', {
-            'fields': ('item', 'order'),
-            'description': 'Товар или заказ, который был оплачен'
+            'fields': ('item', 'order')
         }),
         ('Финансы', {
             'fields': ('amount', 'currency', 'get_display_amount', 'paid_at')
@@ -370,7 +366,7 @@ class CustomUserAdmin(UserAdmin):
         total = sum(
             p.amount for p in obj.payments.filter(status='completed')
         )
-        symbol = '$'  
+        symbol = '$'
         return f"{symbol}{total / 100:.2f}"
     get_total_spent.short_description = '💰 Потрачено'
     
