@@ -13,10 +13,12 @@ if '.vercel.app' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.extend(['.vercel.app', '.now.sh'])
 
 CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app', 'https://test-py-stripe.vercel.app']
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
+
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SAMESITE = 'Lax'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
